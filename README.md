@@ -61,4 +61,4 @@ Fooling around with React.
 * gulp optimize (run optimization tasks)
 
 [scss-lint]:<https://github.com/brigade/scss-lint#installation>
-[Live demo]:<http://iondrimba.github.io/es6starterproject/>
+[Live demo]:<http://iondrimba.github.io/react-hello-world/>
