@@ -3,33 +3,60 @@ import ReactDOM from '../../node_modules/react-dom/dist/react-dom';
 
 class App {
     constructor() {
-        var ComponentBusca = React.createClass({
-            render: function() {
+        class ComponentBusca extends React.Component {
+            componentWillMount() {
+                console.log('Busca componentWillMount');
+                return true;
+            }
+            componentDidMount() {
+                console.log('Busca componentDidMount');
+                return true;
+            }
+            render() {
+                console.log('Busca render');
                 return <div > < input type = "text"
                 placeholder = "Search"
-                value = "" > < /input> < button type = "button" > Buscar < /button > < /div > ;
+                value = "" / > < button type = "button" > Buscar < /button > < /div > ;
             }
-        });
-        var Component = React.createClass({
-            propTypes: {
-                name: React.PropTypes.string.isRequired
-            },
-            render: function() {
-                return <p > Hello { this.props.name } < /p>;
-            }
-        });
+        }
 
-        var App = React.createClass({
-            propTypes: {
-                name: React.PropTypes.string.isRequired
-            },
-            render: function() {
+        class ComponentUser extends React.Component {
+            componentWillMount() {
+                console.log('User componentWillMount');
+                return true;
+            }
+            componentDidMount() {
+                console.log('User componentDidMount');
+                return true;
+            }
+            render() {
+                console.log('User render');
+                return <p > User { this.props.name } < /p>;
+            }
+        }
+
+        class Main extends React.Component {
+            componentWillMount() {
+                console.log('App componentWillMount');
+                return true;
+            }
+            componentDidMount() {
+                console.log('App componentDidMount');
+                return true;
+            }
+            render() {
+                console.log('App render');
                 return <div >
                     < ComponentBusca / >
-                    < Component name = { this.props.name } />  < /div>;
+                    < ComponentUser / > < /div > ;
             }
-        });
-        ReactDOM.render( < App name = "John" / > , document.getElementById('example'));
+        }
+
+        ComponentUser.propTypes = { name: React.PropTypes.string.isRequired };
+        ComponentUser.defaultProps = { name: 'Ion' };
+        Main.propTypes = { name: React.PropTypes.string.isRequired };
+
+        ReactDOM.render( < Main name = "John" / > , document.getElementById('example'));
     }
 }
 
