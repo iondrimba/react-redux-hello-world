@@ -37895,31 +37895,71 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } // import page from '../../node_modules/page/page';
-// import handlebars from '../../node_modules/handlebars/dist/handlebars';
-// import jquery from '../../node_modules/jquery/dist/jquery';
-// import Controller from './core/controller';
-
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var App = function App() {
     _classCallCheck(this, App);
 
-    // this.$ = jquery;
-    // this.router = page;
-    // this.handlebars = handlebars;
-    // this.controller = new Controller(this);
-    // this.controller.start();
-    _reactDom2.default.render(_react2.default.createElement(
-        'h1',
-        null,
-        'Hello, world!'
-    ), document.getElementById('example'));
-}
-// //encapsulating template engine so its easy to change
-// compile(template) {
-//     return this.handlebars.compile(template);
-// }
-;
+    var ComponentBusca = _react2.default.createClass({
+        displayName: 'ComponentBusca',
+
+        render: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                ' ',
+                _react2.default.createElement(
+                    'input',
+                    { type: 'text',
+                        placeholder: 'Search',
+                        value: '' },
+                    ' '
+                ),
+                ' ',
+                _react2.default.createElement(
+                    'button',
+                    { type: 'button' },
+                    ' Buscar '
+                ),
+                ' '
+            );
+        }
+    });
+    var Component = _react2.default.createClass({
+        displayName: 'Component',
+
+        propTypes: {
+            name: _react2.default.PropTypes.string.isRequired
+        },
+        render: function render() {
+            return _react2.default.createElement(
+                'p',
+                null,
+                ' Hello ',
+                this.props.name,
+                ' '
+            );
+        }
+    });
+
+    var _App = _react2.default.createClass({
+        displayName: '_App',
+
+        propTypes: {
+            name: _react2.default.PropTypes.string.isRequired
+        },
+        render: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(ComponentBusca, null),
+                _react2.default.createElement(Component, { name: this.props.name }),
+                '  '
+            );
+        }
+    });
+    _reactDom2.default.render(_react2.default.createElement(_App, { name: 'John' }), document.getElementById('example'));
+};
 
 window.app = new App();
 
