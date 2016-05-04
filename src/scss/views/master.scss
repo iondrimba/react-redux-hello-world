@@ -13,17 +13,17 @@ button {
 
 input {
     padding: 8px;
-    
+
     color: #444;
 }
 
 a:hover,
-button:hover {
+button:hover:not(.disabled) {
     @include button-hover();
 }
 
 a:active,
-button:active {
+button:active:not(.disabled) {
     @include button-active();
 }
 

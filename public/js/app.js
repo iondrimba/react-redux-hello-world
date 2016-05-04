@@ -37942,21 +37942,68 @@ var TodoAdd = function (_React$Component) {
         _this.onChange = _this.onTextChange.bind(_this);
         _this.onClick = _this.onButtonClick.bind(_this);
         _this.state = {
-            name: _this.props.name
+            name: _this.props.name,
+            enabled: false
         };
         return _this;
     }
 
     _createClass(TodoAdd, [{
+        key: 'isEnabledCss',
+        value: function isEnabledCss() {
+            var enabledCss = 'disabled';
+
+            if (this.state.enabled) {
+                enabledCss = '';
+            }
+
+            console.log('isEnabledCss', this.state.enabled);
+
+            return enabledCss;
+        }
+    }, {
+        key: 'isTextBlank',
+        value: function isTextBlank(text) {
+            var isblank = false;
+
+            if (text.length === 0) {
+                isblank = true;
+            }
+
+            var result = text.match(/\w/g);
+            if (result === null) {
+                isblank = true;
+            }
+
+            return isblank;
+        }
+    }, {
+        key: 'enableButton',
+        value: function enableButton(text) {
+            var retorno = !this.isTextBlank(text);
+            return retorno;
+        }
+    }, {
+        key: 'disableButton',
+        value: function disableButton() {
+            var retorno = '';
+            if (this.state.enabled === false) {
+                retorno = 'disabled';
+            }
+
+            return retorno;
+        }
+    }, {
         key: 'onTextChange',
         value: function onTextChange(evt) {
             console.log('onTextChange', evt.currentTarget.value);
-            this.setState({ name: evt.currentTarget.value });
+            this.setState({ name: evt.currentTarget.value, enabled: this.enableButton(evt.currentTarget.value) });
         }
     }, {
         key: 'onButtonClick',
         value: function onButtonClick() {
             this.props.onAdd(this.state.name);
+            this.setState({ name: '', enabled: false });
         }
     }, {
         key: 'componentWillMount',
@@ -37977,11 +38024,11 @@ var TodoAdd = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement('input', { type: 'text', onChange: this.onChange, placeholder: 'todo' }),
+                _react2.default.createElement('input', { type: 'text', onChange: this.onChange, placeholder: 'todo', value: this.state.name }),
                 _react2.default.createElement(
                     'button',
-                    { type: 'button', onClick: this.onClick },
-                    ' Add '
+                    { type: 'button', className: this.isEnabledCss(), disabled: this.disableButton(), onClick: this.onClick },
+                    'Add'
                 )
             );
         }
@@ -38044,9 +38091,9 @@ var TodoApp = function (_React$Component) {
         key: 'onAddTodo',
         value: function onAddTodo(text) {
             console.log('main', text);
-            var todos = this.state.todos;
+            var todos = JSON.parse(JSON.stringify(this.state.todos));
             todos.push(text);
-            this.setState({ todos: todos });
+            this.setState({ todos: todos, name: '' });
         }
     }, {
         key: 'componentWillMount',
@@ -38130,10 +38177,10 @@ var TodoList = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                this.props.todos.map(function (todo) {
+                this.props.todos.map(function (todo, index) {
                     return _react2.default.createElement(
                         'li',
-                        null,
+                        { key: index },
                         todo
                     );
                 })

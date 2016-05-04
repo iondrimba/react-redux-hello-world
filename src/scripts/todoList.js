@@ -15,11 +15,11 @@ class TodoList extends React.Component {
     }
     render() {
         console.log('TodoList render');
-    return (
+        return (
             <div>{
-                    this.props.todos.map(function(todo) {
+                    this.props.todos.map(function(todo, index) {
                         return (
-                            <li>{todo}</li>
+                            <li key={index}>{todo}</li>
                         );
                     })
                  }

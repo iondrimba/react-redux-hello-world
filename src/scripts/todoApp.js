@@ -13,9 +13,9 @@ class TodoApp extends React.Component {
     }
     onAddTodo(text) {
         console.log('main',text);
-        let todos = this.state.todos;
+        let todos = JSON.parse(JSON.stringify(this.state.todos));
         todos.push(text);
-        this.setState({todos:todos});
+        this.setState({todos:todos, name:''});
     }
     componentWillMount() {
         console.log('App componentWillMount');
