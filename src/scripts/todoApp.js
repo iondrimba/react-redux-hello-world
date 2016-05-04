@@ -7,15 +7,14 @@ class TodoApp extends React.Component {
         super(props);
         this.onAdd=this.onAddTodo.bind(this);
         this.state = {
-            todos:[],
-            name:''
+            todos:[]
         };
     }
     onAddTodo(text) {
         console.log('main',text);
         let todos = JSON.parse(JSON.stringify(this.state.todos));
         todos.push(text);
-        this.setState({todos:todos, name:''});
+        this.setState({todos:todos});
     }
     componentWillMount() {
         console.log('App componentWillMount');
@@ -28,10 +27,10 @@ class TodoApp extends React.Component {
     render() {
         console.log('App render');
         return (
-            <div >
-                < TodoAdd onAdd = {this.onAdd}  / >
-                < TodoList todos={this.state.todos} / >
-            < /div >
+            <div>
+                <TodoAdd onAdd = {this.onAdd}/>
+                <TodoList todos={this.state.todos}/>
+            </div>
         );
     }
 }

@@ -1,4 +1,5 @@
 import React from '../../node_modules/react/dist/react';
+import TodoItem from './todoItem';
 
 class TodoList extends React.Component {
    constructor(props) {
@@ -19,7 +20,7 @@ class TodoList extends React.Component {
             <div>{
                     this.props.todos.map(function(todo, index) {
                         return (
-                            <li key={index}>{todo}</li>
+                            <TodoItem key={index} text={todo} />
                         );
                     })
                  }

@@ -357,6 +357,10 @@ th {
   background-color: gray;
   cursor: not-allowed; }
 
+.disabled {
+  background-color: gray;
+  cursor: not-allowed; }
+
 .menu {
   display: block;
   width: 100%;
@@ -364,6 +368,10 @@ th {
   .menu a {
     float: left;
     margin-right: 10px; }
+
+.disabled {
+  background-color: gray;
+  cursor: not-allowed; }
 
 .disabled {
   background-color: gray;

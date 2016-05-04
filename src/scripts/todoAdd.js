@@ -7,19 +7,15 @@ class TodoAdd extends React.Component {
         this.onChange=this.onTextChange.bind(this);
         this.onClick=this.onButtonClick.bind(this);
         this.state = {
-            name: this.props.name,
+            name: '',
             enabled:false
         };
     }
     isEnabledCss() {
         let enabledCss = 'disabled';
-
         if(this.state.enabled){
             enabledCss = '';
         }
-
-        console.log('isEnabledCss', this.state.enabled);
-
         return enabledCss;
     }
     isTextBlank(text) {
@@ -55,6 +51,10 @@ class TodoAdd extends React.Component {
     onButtonClick() {
         this.props.onAdd(this.state.name);
         this.setState({ name: '', enabled:false });
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('TodoAdd shouldComponentUpdate', nextProps, nextState);
+        return true;
     }
     componentWillMount() {
         console.log('TodoAdd componentWillMount');
