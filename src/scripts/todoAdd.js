@@ -1,4 +1,4 @@
-import React from '../../node_modules/react/dist/react';
+import React from 'react';
 
 class TodoAdd extends React.Component {
     constructor(props) {
@@ -74,6 +74,5 @@ class TodoAdd extends React.Component {
 }
 
 TodoAdd.propTypes = { onAdd: React.PropTypes.function };
-TodoAdd.propTypes = { name: React.PropTypes.string };
 
 export default TodoAdd;

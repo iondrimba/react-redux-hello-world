@@ -1,4 +1,4 @@
-import React from '../../node_modules/react/dist/react';
+import React from 'react';
 import TodoItem from './todoItem';
 
 class TodoList extends React.Component {

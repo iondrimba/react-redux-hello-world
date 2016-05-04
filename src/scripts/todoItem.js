@@ -1,4 +1,4 @@
-import React from '../../node_modules/react/dist/react';
+import React from 'react';
 
 class TodoItem extends React.Component {
    constructor(props) {
