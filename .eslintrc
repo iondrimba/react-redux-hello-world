@@ -13,10 +13,11 @@
 	    "es6": true,
 	    "node": true
 	},
-	
+
 	"ecmaFeatures": {
 	    "arrowFunctions": true,
-	    "modules": true
+	    "modules": true,
+	    "jsx":true
 	},
 	"parserOptions": {
 	    "ecmaVersion": 6,
