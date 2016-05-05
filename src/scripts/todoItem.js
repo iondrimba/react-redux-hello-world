@@ -4,33 +4,36 @@ class TodoItem extends React.Component {
    constructor(props) {
         super(props);
         this.props=props;
+        this.todo = this.props.todo;
         this.onClick = this.onClickItem.bind(this);
+        this.state = {
+            completed:this.todo.completed
+        }
     }
     componentWillMount() {
-        console.log('TodoItem componentWillMount');
+        //console.log('TodoItem componentWillMount');
         return true;
     }
     componentDidMount() {
-        console.log('TodoItem componentDidMount');
+        //console.log('TodoItem componentDidMount');
         return true;
     }
     onClickItem() {
-        console.log('item click', this.props.todo);
-        this.props.onClick(this.props.todo);
+        this.props.onClick(this.todo);
     }
     isCompletedCSS() {
         let className='todoItem';
 
-        if(this.props.todo.completed) {
+        if(this.todo.completed) {
             className='todoItem completed';
         }
 
         return className;
     }
     render() {
-        console.log('TodoItem render');
+        console.log('TodoItem render', this.todo);
         return (
-            <li className={this.isCompletedCSS()} onClick={this.onClick}>{this.props.todo.label}</li>
+            <li className={this.isCompletedCSS()} onClick={this.onClick}>{this.todo.label}</li>
         );
     }
 }

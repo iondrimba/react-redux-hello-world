@@ -18,13 +18,6 @@ class TodoAdd extends React.Component {
         }
         return enabledCss;
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        let update = true;
-        if(this.isTextBlank(nextState.name)){
-            update = false;
-        }
-        return update;
-    }
     isTextBlank(text) {
         let isblank = false;
 
@@ -52,7 +45,6 @@ class TodoAdd extends React.Component {
         return retorno;
     }
     onTextChange(evt) {
-        console.log('onTextChange',evt.currentTarget.value);
         this.setState({ name: evt.currentTarget.value, enabled:this.enableButton(evt.currentTarget.value) });
     }
     onButtonClick() {
@@ -60,15 +52,15 @@ class TodoAdd extends React.Component {
         this.setState({ name: '', enabled:false });
     }
     componentWillMount() {
-        console.log('TodoAdd componentWillMount');
+        //console.log('TodoAdd componentWillMount');
         return true;
     }
     componentDidMount() {
-        console.log('TodoAdd componentDidMount');
+        //console.log('TodoAdd componentDidMount');
         return true;
     }
     render() {
-        console.log('TodoAdd render');
+        //console.log('TodoAdd render');
         return (
             <div className="add-comp">
                 < input type="text" onChange={this.onChange}  placeholder="todo" value={this.state.name}/>
@@ -79,5 +71,9 @@ class TodoAdd extends React.Component {
 }
 
 TodoAdd.propTypes = { onAdd: React.PropTypes.func };
+TodoAdd.defaultProps = {
+    name:'',
+    enabled:false
+}
 
 export default TodoAdd;

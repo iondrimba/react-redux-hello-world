@@ -5,27 +5,36 @@ class TodoList extends React.Component {
    constructor(props) {
         super(props);
         this.props=props;
-        this.onClick = this.onClickItem.bind(this);
     }
     componentWillMount() {
-        console.log('TodoList componentWillMount');
         return true;
     }
     componentDidMount() {
-        console.log('TodoList componentDidMount');
         return true;
     }
-    onClickItem(todo) {
-        console.log('list item click', todo);
-        this.props.onClick(todo);
+    filterIntes() {
+        let itens=[];
+        if(this.props.filter==='completos') {
+            this.props.todos.map(function(todo) {
+                if( todo.completed) {
+                    itens.push(todo);
+                }
+            });
+        }else{
+            itens = this.props.todos;
+        }
+
+        return itens;
     }
     render() {
-        console.log('TodoList render');
+        let itens = this.filterIntes();
+
         return (
-            <div>{
-                    this.props.todos.map(function(todo, index) {
+            <div className="todo-list">{
+                    itens.map(function(todo) {
+                        console.log('list', todo);
                         return (
-                            <TodoItem key={index} todo={todo} onClick={this.onClick}/>
+                            <TodoItem key={todo.id} todo={todo} onClick={this.props.onClick}/>
                         );
                     }.bind(this))
                  }
@@ -35,9 +44,8 @@ class TodoList extends React.Component {
 }
 
 TodoList.propTypes = { todos: React.PropTypes.array.isRequired };
-TodoList.propTypes = { onClick: React.PropTypes.func };
-TodoList.defaultProps = {
-    todos:[]
-};
+TodoList.propTypes = { filter: React.PropTypes.string.isRequired };
+TodoList.propTypes = { onClick: React.PropTypes.func.isRequired };
+
 
 export default TodoList;

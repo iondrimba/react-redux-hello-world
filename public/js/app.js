@@ -19554,15 +19554,6 @@ var TodoAdd = function (_React$Component) {
             return enabledCss;
         }
     }, {
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate(nextProps, nextState) {
-            var update = true;
-            if (this.isTextBlank(nextState.name)) {
-                update = false;
-            }
-            return update;
-        }
-    }, {
         key: 'isTextBlank',
         value: function isTextBlank(text) {
             var isblank = false;
@@ -19597,7 +19588,6 @@ var TodoAdd = function (_React$Component) {
     }, {
         key: 'onTextChange',
         value: function onTextChange(evt) {
-            console.log('onTextChange', evt.currentTarget.value);
             this.setState({ name: evt.currentTarget.value, enabled: this.enableButton(evt.currentTarget.value) });
         }
     }, {
@@ -19609,19 +19599,19 @@ var TodoAdd = function (_React$Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            console.log('TodoAdd componentWillMount');
+            //console.log('TodoAdd componentWillMount');
             return true;
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('TodoAdd componentDidMount');
+            //console.log('TodoAdd componentDidMount');
             return true;
         }
     }, {
         key: 'render',
         value: function render() {
-            console.log('TodoAdd render');
+            //console.log('TodoAdd render');
             return _react2.default.createElement(
                 'div',
                 { className: 'add-comp' },
@@ -19639,6 +19629,10 @@ var TodoAdd = function (_React$Component) {
 }(_react2.default.Component);
 
 TodoAdd.propTypes = { onAdd: _react2.default.PropTypes.func };
+TodoAdd.defaultProps = {
+    name: '',
+    enabled: false
+};
 
 exports.default = TodoAdd;
 
@@ -19663,6 +19657,10 @@ var _todoList = require('./todoList');
 
 var _todoList2 = _interopRequireDefault(_todoList);
 
+var _todoFilter = require('./todoFilter');
+
+var _todoFilter2 = _interopRequireDefault(_todoFilter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19680,10 +19678,25 @@ var TodoApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TodoApp).call(this, props));
 
         _this.state = {
-            todos: []
+            todos: [{
+                label: 'aaa',
+                completed: false,
+                id: 0
+            }, {
+                label: 'bbb',
+                completed: false,
+                id: 1
+            }, {
+                label: 'ccc',
+                completed: true,
+                id: 2
+            }],
+            filteredCount: 3,
+            filter: 'todos'
         };
 
         _this.onAdd = _this.onAddTodo.bind(_this);
+        _this.onFilter = _this.onFilterTodo.bind(_this);
         _this.onClick = _this.onClickItem.bind(_this);
 
         return _this;
@@ -19692,45 +19705,56 @@ var TodoApp = function (_React$Component) {
     _createClass(TodoApp, [{
         key: 'onAddTodo',
         value: function onAddTodo(text) {
-            var todos = JSON.parse(JSON.stringify(this.state.todos));
-            todos.push({ label: text, completed: false, id: todos.length });
-            this.setState({ todos: todos });
+            this.state.todos.push({ label: text, completed: false, id: this.state.todos.length });
+            this.setState({ todos: this.state.todos });
         }
     }, {
         key: 'onClickItem',
         value: function onClickItem(todo) {
-            console.log('click', todo);
             todo.completed = !todo.completed;
-            var todos = JSON.parse(JSON.stringify(this.state.todos));
-            var selected = todos.filter(function (item) {
-                return item.id == todo.id; // Filter out the appropriate one
-            }); // Get result and ac
+            var selected = this.state.todos.filter(function (item) {
+                return item.id === todo.id;
+            });
 
-            selected.completed = todo.completed;
+            selected.completed = !todo.completed;
 
-            this.setState({ todos: todos });
+            var count = this.getCount(this.state.todos);
+            if (count == 0 && this.state.filter === 'completos') {
+                this.setState({ todos: this.state.todos, filter: 'todos' });
+            } else {
+                this.setState({ todos: this.state.todos, count: count });
+            }
         }
     }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            console.log('App componentWillMount');
-            return true;
+        key: 'getCount',
+        value: function getCount(array) {
+            var count = 0;
+            if (this.state.filter === 'completos') {
+                array.map(function (item) {
+                    if (item.completed === true) {
+                        count++;
+                    }
+                });
+            } else {
+                count = array.length;
+            }
+
+            return count;
         }
     }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            console.log('App componentDidMount');
-            return true;
+        key: 'onFilterTodo',
+        value: function onFilterTodo(filter) {
+            this.setState({ filter: filter });
         }
     }, {
         key: 'render',
         value: function render() {
-            console.log('App render');
             return _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(_todoAdd2.default, { onAdd: this.onAdd }),
-                _react2.default.createElement(_todoList2.default, { todos: this.state.todos, onClick: this.onClick })
+                _react2.default.createElement(_todoList2.default, { todos: this.state.todos, filter: this.state.filter, onClick: this.onClick }),
+                _react2.default.createElement(_todoFilter2.default, { onFilter: this.onFilter, filter: this.state.filter })
             );
         }
     }]);
@@ -19740,7 +19764,91 @@ var TodoApp = function (_React$Component) {
 
 exports.default = TodoApp;
 
-},{"./todoAdd":169,"./todoList":172,"react":167}],171:[function(require,module,exports){
+},{"./todoAdd":169,"./todoFilter":171,"./todoList":173,"react":167}],171:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TodoFilter = function (_React$Component) {
+    _inherits(TodoFilter, _React$Component);
+
+    function TodoFilter(props) {
+        _classCallCheck(this, TodoFilter);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TodoFilter).call(this, props));
+
+        _this.props = props;
+        _this.onClickTodos = _this.onClickItemTodos.bind(_this);
+        _this.onClickCompletos = _this.onClickItemCompletos.bind(_this);
+        return _this;
+    }
+
+    _createClass(TodoFilter, [{
+        key: 'onClickItemTodos',
+        value: function onClickItemTodos() {
+            this.props.onFilter('todos');
+        }
+    }, {
+        key: 'onClickItemCompletos',
+        value: function onClickItemCompletos() {
+            this.props.onFilter('completos');
+        }
+    }, {
+        key: 'isActive',
+        value: function isActive(className, filter) {
+            var css = className;
+
+            if (className === filter) {
+                css = className + ' active';
+            }
+
+            return css;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'todo-filter' },
+                _react2.default.createElement(
+                    'button',
+                    { className: this.isActive('todos', this.props.filter), onClick: this.onClickTodos, type: 'button' },
+                    'Todos'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { className: this.isActive('completos', this.props.filter), onClick: this.onClickCompletos, type: 'button' },
+                    'Completos'
+                )
+            );
+        }
+    }]);
+
+    return TodoFilter;
+}(_react2.default.Component);
+
+TodoFilter.propTypes = { onFilter: _react2.default.PropTypes.func };
+TodoFilter.propTypes = { filter: _react2.default.PropTypes.string.isRequired };
+
+exports.default = TodoFilter;
+
+},{"react":167}],172:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19770,34 +19878,37 @@ var TodoItem = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TodoItem).call(this, props));
 
         _this.props = props;
+        _this.todo = _this.props.todo;
         _this.onClick = _this.onClickItem.bind(_this);
+        _this.state = {
+            completed: _this.todo.completed
+        };
         return _this;
     }
 
     _createClass(TodoItem, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            console.log('TodoItem componentWillMount');
+            //console.log('TodoItem componentWillMount');
             return true;
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('TodoItem componentDidMount');
+            //console.log('TodoItem componentDidMount');
             return true;
         }
     }, {
         key: 'onClickItem',
         value: function onClickItem() {
-            console.log('item click', this.props.todo);
-            this.props.onClick(this.props.todo);
+            this.props.onClick(this.todo);
         }
     }, {
         key: 'isCompletedCSS',
         value: function isCompletedCSS() {
             var className = 'todoItem';
 
-            if (this.props.todo.completed) {
+            if (this.todo.completed) {
                 className = 'todoItem completed';
             }
 
@@ -19806,11 +19917,11 @@ var TodoItem = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log('TodoItem render');
+            console.log('TodoItem render', this.todo);
             return _react2.default.createElement(
                 'li',
                 { className: this.isCompletedCSS(), onClick: this.onClick },
-                this.props.todo.label
+                this.todo.label
             );
         }
     }]);
@@ -19823,7 +19934,7 @@ TodoItem.propTypes = { todo: _react2.default.PropTypes.object.isRequired };
 
 exports.default = TodoItem;
 
-},{"react":167}],172:[function(require,module,exports){
+},{"react":167}],173:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19857,37 +19968,46 @@ var TodoList = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TodoList).call(this, props));
 
         _this.props = props;
-        _this.onClick = _this.onClickItem.bind(_this);
         return _this;
     }
 
     _createClass(TodoList, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            console.log('TodoList componentWillMount');
             return true;
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('TodoList componentDidMount');
             return true;
         }
     }, {
-        key: 'onClickItem',
-        value: function onClickItem(todo) {
-            console.log('list item click', todo);
-            this.props.onClick(todo);
+        key: 'filterIntes',
+        value: function filterIntes() {
+            var itens = [];
+            if (this.props.filter === 'completos') {
+                this.props.todos.map(function (todo) {
+                    if (todo.completed) {
+                        itens.push(todo);
+                    }
+                });
+            } else {
+                itens = this.props.todos;
+            }
+
+            return itens;
         }
     }, {
         key: 'render',
         value: function render() {
-            console.log('TodoList render');
+            var itens = this.filterIntes();
+
             return _react2.default.createElement(
                 'div',
-                null,
-                this.props.todos.map(function (todo, index) {
-                    return _react2.default.createElement(_todoItem2.default, { key: index, todo: todo, onClick: this.onClick });
+                { className: 'todo-list' },
+                itens.map(function (todo) {
+                    console.log('list', todo);
+                    return _react2.default.createElement(_todoItem2.default, { key: todo.id, todo: todo, onClick: this.props.onClick });
                 }.bind(this))
             );
         }
@@ -19897,11 +20017,9 @@ var TodoList = function (_React$Component) {
 }(_react2.default.Component);
 
 TodoList.propTypes = { todos: _react2.default.PropTypes.array.isRequired };
-TodoList.propTypes = { onClick: _react2.default.PropTypes.func };
-TodoList.defaultProps = {
-    todos: []
-};
+TodoList.propTypes = { filter: _react2.default.PropTypes.string.isRequired };
+TodoList.propTypes = { onClick: _react2.default.PropTypes.func.isRequired };
 
 exports.default = TodoList;
 
-},{"./todoItem":171,"react":167}]},{},[168]);
+},{"./todoItem":172,"react":167}]},{},[168]);
