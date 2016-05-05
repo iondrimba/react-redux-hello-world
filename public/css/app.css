@@ -441,3 +441,13 @@ hr {
   opacity: 1;
   -webkit-transition: all .5s;
   transition: all .5s; }
+
+.add-comp {
+  margin-bottom: 20px; }
+
+.todoItem {
+  cursor: pointer; }
+
+.completed {
+  text-decoration: line-through;
+  color: green; }

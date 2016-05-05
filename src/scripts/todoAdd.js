@@ -18,6 +18,13 @@ class TodoAdd extends React.Component {
         }
         return enabledCss;
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        let update = true;
+        if(this.isTextBlank(nextState.name)){
+            update = false;
+        }
+        return update;
+    }
     isTextBlank(text) {
         let isblank = false;
 
@@ -52,10 +59,6 @@ class TodoAdd extends React.Component {
         this.props.onAdd(this.state.name);
         this.setState({ name: '', enabled:false });
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('TodoAdd shouldComponentUpdate', nextProps, nextState);
-        return true;
-    }
     componentWillMount() {
         console.log('TodoAdd componentWillMount');
         return true;
@@ -66,13 +69,15 @@ class TodoAdd extends React.Component {
     }
     render() {
         console.log('TodoAdd render');
-        return (<div >
-            < input type="text" onChange={this.onChange}  placeholder="todo" value={this.state.name}/>
-            < button type="button" className={this.isEnabledCss()} disabled={this.disableButton()} onClick={this.onClick}>Add</button >
-        < /div >);
+        return (
+            <div className="add-comp">
+                < input type="text" onChange={this.onChange}  placeholder="todo" value={this.state.name}/>
+                < button type="button" className={this.isEnabledCss()} disabled={this.disableButton()} onClick={this.onClick}>Add</button >
+            </div >
+        );
     }
 }
 
-TodoAdd.propTypes = { onAdd: React.PropTypes.function };
+TodoAdd.propTypes = { onAdd: React.PropTypes.func };
 
 export default TodoAdd;

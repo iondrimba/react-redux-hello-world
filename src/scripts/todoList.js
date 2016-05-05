@@ -5,6 +5,7 @@ class TodoList extends React.Component {
    constructor(props) {
         super(props);
         this.props=props;
+        this.onClick = this.onClickItem.bind(this);
     }
     componentWillMount() {
         console.log('TodoList componentWillMount');
@@ -14,15 +15,19 @@ class TodoList extends React.Component {
         console.log('TodoList componentDidMount');
         return true;
     }
+    onClickItem(todo) {
+        console.log('list item click', todo);
+        this.props.onClick(todo);
+    }
     render() {
         console.log('TodoList render');
         return (
             <div>{
                     this.props.todos.map(function(todo, index) {
                         return (
-                            <TodoItem key={index} text={todo} />
+                            <TodoItem key={index} todo={todo} onClick={this.onClick}/>
                         );
-                    })
+                    }.bind(this))
                  }
             </div>
         );
@@ -30,6 +35,7 @@ class TodoList extends React.Component {
 }
 
 TodoList.propTypes = { todos: React.PropTypes.array.isRequired };
+TodoList.propTypes = { onClick: React.PropTypes.func };
 TodoList.defaultProps = {
     todos:[]
 };
