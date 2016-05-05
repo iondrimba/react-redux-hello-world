@@ -353,6 +353,14 @@ td,
 th {
   padding: 0; }
 
+.disabled {
+  background-color: gray;
+  cursor: not-allowed; }
+
+.disabled {
+  background-color: gray;
+  cursor: not-allowed; }
+
 .menu {
   display: block;
   width: 100%;
@@ -360,6 +368,14 @@ th {
   .menu a {
     float: left;
     margin-right: 10px; }
+
+.disabled {
+  background-color: gray;
+  cursor: not-allowed; }
+
+.disabled {
+  background-color: gray;
+  cursor: not-allowed; }
 
 body {
   font-family: sans-serif;
@@ -387,13 +403,13 @@ input {
   color: #444; }
 
 a:hover,
-button:hover {
+button:hover:not(.disabled) {
   background-color: #074FBB;
   -webkit-transition: all .3s;
   transition: all .3s; }
 
 a:active,
-button:active {
+button:active:not(.disabled) {
   position: relative;
   top: 1px;
   left: 1px; }
