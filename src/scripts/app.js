@@ -11,14 +11,14 @@ class TodoAdd extends React.Component {
             name: this.props.name
         };
     }
-     onTextChange(evt) {
+     onTextChange(evt) {    
          console.log('onTextChange',evt.currentTarget.value);
          this.setState({ name: evt.currentTarget.value });
     }
      onButtonClick() {
         this.props.onAdd(this.state.name);
     }
-    componentWillMount() {
+componentWillMount() {
         console.log('TodoAdd componentWillMount');
         return true;
     }
