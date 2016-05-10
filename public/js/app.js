@@ -19616,10 +19616,6 @@ var TodoAdd = function (_React$Component) {
 }(_react2.default.Component);
 
 TodoAdd.propTypes = { onAdd: _react2.default.PropTypes.func };
-TodoAdd.defaultProps = {
-    name: '',
-    enabled: false
-};
 
 exports.default = TodoAdd;
 
@@ -19636,7 +19632,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _todoAdd = require('./todoAdd');
+var _todoAdd = require('./todoAdd.jsx');
 
 var _todoAdd2 = _interopRequireDefault(_todoAdd);
 
@@ -19751,7 +19747,7 @@ var TodoApp = function (_React$Component) {
 
 exports.default = TodoApp;
 
-},{"./todoAdd":169,"./todoFilter":171,"./todoList":173,"react":167}],171:[function(require,module,exports){
+},{"./todoAdd.jsx":169,"./todoFilter":171,"./todoList":173,"react":167}],171:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

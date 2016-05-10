@@ -7,5 +7,6 @@
 	"javascript.format.insertSpaceAfterSemicolonInForStatements": false,
 	"javascript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
 	"javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
-	"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false
+	"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+	"files.autoSave": "afterDelay",
 }

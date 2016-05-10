@@ -6,9 +6,9 @@ class TodoItem extends React.Component {
         this.props=props;
         this.todo = this.props.todo;
         this.onClick = this.onClickItem.bind(this);
-        this.state = {
-            completed:this.todo.completed
-        }
+        this.state={
+            completed: this.todo.completed
+        };
     }
     onClickItem() {
         this.props.onClick(this.todo);
