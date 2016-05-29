@@ -14,7 +14,7 @@ module.exports = function() {
         }
     });
 
-    var bundleStream = browserify('./src/scripts/app.js')
+    var bundleStream = browserify('./src/scripts/main.js')
         .transform(babelify, {
             'presets': ['es2015', 'react']
         })

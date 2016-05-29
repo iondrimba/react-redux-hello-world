@@ -6,52 +6,30 @@ import TodoFilter from './todoFilter.jsx';
 class TodoApp extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            todos:[
-            {
-                label:'aaa',
-                completed:false,
-                id:0
-            },
-            {
-                label:'bbb',
-                completed:false,
-                id:1
-            },
-            {
-                label:'ccc',
-                completed:true,
-                id:2
-            }
-            ],
-            filteredCount:3,
-            filter:'all'
-        };
-
+        console.log(props);
         this.onAdd = this.onAddTodo.bind(this);
         this.onFilter = this.onFilterTodo.bind(this);
         this.onClick = this.onClickItem.bind(this);
 
     }
     onAddTodo(text) {
-        this.state.todos.push({label:text, completed:false, id:this.state.todos.length});
-        this.setState({todos:this.state.todos});
+        // this.state.todos.push({label:text, completed:false, id:this.state.todos.length});
+        // this.setState({todos:this.state.todos});
     }
     onClickItem(todo) {
-        todo.completed = !todo.completed;
-        let selected = this.state.todos.filter(function(item) {
-            return item.id === todo.id;
-        });
+        // todo.completed = !todo.completed;
+        // let selected = this.state.todos.filter(function(item) {
+        //     return item.id === todo.id;
+        // });
 
-        selected.completed=!todo.completed;
+        // selected.completed=!todo.completed;
 
-        let count = this.getCount(this.state.todos);
-        if(count==0 && this.state.filter==='completed') {
-            this.setState({todos:this.state.todos, filter:'all'});
-        }else{
-            this.setState({todos:this.state.todos, count:count});
-        }
+        // let count = this.getCount(this.state.todos);
+        // if(count==0 && this.state.filter==='completed') {
+        //     this.setState({todos:this.state.todos, filter:'all'});
+        // }else{
+        //     this.setState({todos:this.state.todos, count:count});
+        // }
 
     }
     getCount(array){
@@ -69,14 +47,13 @@ class TodoApp extends React.Component {
         return count;
     }
     onFilterTodo(filter) {
-        this.setState({filter:filter});
+        // this.setState({filter:filter});
     }
     render() {
         return (
             <div>
-                <TodoAdd onAdd = {this.onAdd}/>
-                <TodoList todos={this.state.todos}  filter={this.state.filter} onClick={this.onClick} />
-                <TodoFilter onFilter={this.onFilter} filter={this.state.filter}/>
+                <TodoAdd {...this.props} onAdd = {this.onAdd}/>
+                
             </div>
         );
     }

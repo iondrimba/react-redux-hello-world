@@ -21130,6 +21130,122 @@ module.exports = function symbolObservablePonyfill(root) {
 },{}],190:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var addTodo = function addTodo(todo) {
+  return {
+    type: 'ADD_TODO',
+    todo: todo
+  };
+};
+
+exports.default = addTodo;
+
+},{}],191:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var filterTodos = function filterTodos(filter) {
+  return {
+    type: 'FILTER_TODOS',
+    filter: filter
+  };
+};
+
+exports.default = filterTodos;
+
+},{}],192:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var inputChange = function inputChange(name) {
+  return {
+    type: 'INPUT_CHANGE',
+    name: name
+  };
+};
+
+exports.default = inputChange;
+
+},{}],193:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var toggleTodo = function toggleTodo(todo) {
+  return {
+    type: 'TOGGLE_TODO',
+    todo: todo
+  };
+};
+
+exports.default = toggleTodo;
+
+},{}],194:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = require('redux');
+
+var _reactRedux = require('react-redux');
+
+var _addTodo = require('./actions/addTodo');
+
+var _addTodo2 = _interopRequireDefault(_addTodo);
+
+var _filterTodos = require('./actions/filterTodos');
+
+var _filterTodos2 = _interopRequireDefault(_filterTodos);
+
+var _inputChange = require('./actions/inputChange');
+
+var _inputChange2 = _interopRequireDefault(_inputChange);
+
+var _toggleTodo = require('./actions/toggleTodo');
+
+var _toggleTodo2 = _interopRequireDefault(_toggleTodo);
+
+var _todoApp = require('./todoApp.jsx');
+
+var _todoApp2 = _interopRequireDefault(_todoApp);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todos,
+    addTodo: state.addTodo,
+    inputChange: state.inputChange,
+    toggleTodo: state.toggleTodo,
+    filterTodos: state.filterTodos
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addTodoActions: (0, _redux.bindActionCreators)(_addTodo2.default, dispatch),
+    filterTodosActions: (0, _redux.bindActionCreators)(_filterTodos2.default, dispatch),
+    inputChangeActions: (0, _redux.bindActionCreators)(_inputChange2.default, dispatch),
+    toggleTodoActions: (0, _redux.bindActionCreators)(_toggleTodo2.default, dispatch)
+  };
+}
+
+var AppContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_todoApp2.default);
+
+exports.default = AppContainer;
+
+},{"./actions/addTodo":190,"./actions/filterTodos":191,"./actions/inputChange":192,"./actions/toggleTodo":193,"./todoApp.jsx":203,"react-redux":9,"redux":186}],195:[function(require,module,exports){
+'use strict';
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -21144,53 +21260,85 @@ var _index = require('./reducers/index');
 
 var _index2 = _interopRequireDefault(_index);
 
-var _todoApp = require('./todoApp.jsx');
+var _appContainer = require('./appContainer');
 
-var _todoApp2 = _interopRequireDefault(_todoApp);
+var _appContainer2 = _interopRequireDefault(_appContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_index2.default);
+var defaultStore = {
+    todos: [{
+        label: 'aaa',
+        completed: false,
+        id: 0
+    }, {
+        label: 'bbb',
+        completed: false,
+        id: 1
+    }, {
+        label: 'ccc',
+        completed: true,
+        id: 2
+    }],
+    addTodo: {},
+    inputChange: '',
+    toggleTodo: false,
+    filterTodos: 'all'
+};
 
+var store = (0, _redux.createStore)(_index2.default, defaultStore);
+console.log(store.getState());
 (0, _reactDom.render)(_react2.default.createElement(
-  _reactRedux.Provider,
-  { store: store },
-  _react2.default.createElement(_todoApp2.default, null)
+    _reactRedux.Provider,
+    { store: store },
+    _react2.default.createElement(_appContainer2.default, null)
 ), document.getElementById('example'));
 
-},{"./reducers/index":193,"./todoApp.jsx":196,"react":180,"react-dom":6,"react-redux":9,"redux":186}],191:[function(require,module,exports){
-"use strict";
+},{"./appContainer":194,"./reducers/index":198,"react":180,"react-dom":6,"react-redux":9,"redux":186}],196:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-function addTodo() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-    var action = arguments[1];
+function addTodo(state, action) {
+    var defaultTodo = { name: '', enabled: false };
 
+    switch (action) {
+        case 'ADD_TODO':
+            console.log(action, state);
+            break;
+    }
 
-    return state;
+    return Object.assign({}, state, defaultTodo);
 }
 
 exports.default = addTodo;
 
-},{}],192:[function(require,module,exports){
-"use strict";
+},{}],197:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 function filterTodos() {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+    var state = arguments.length <= 0 || arguments[0] === undefined ? 'all' : arguments[0];
     var action = arguments[1];
 
+    switch (action) {
+        case 'FILTER_TODOS':
+            console.log(action, state);
+            break;
+
+        default:
+            return state;
+    }
 
     return state;
 }
 
 exports.default = filterTodos;
 
-},{}],193:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21198,6 +21346,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _redux = require('redux');
+
+var _todos = require('./todos');
+
+var _todos2 = _interopRequireDefault(_todos);
 
 var _addTodo = require('./addTodo');
 
@@ -21211,33 +21363,82 @@ var _filterTodos = require('./filterTodos');
 
 var _filterTodos2 = _interopRequireDefault(_filterTodos);
 
+var _inputChange = require('./inputChange');
+
+var _inputChange2 = _interopRequireDefault(_inputChange);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AppReducers = (0, _redux.combineReducers)({
+    todos: _todos2.default,
     addTodo: _addTodo2.default,
     toggleTodo: _toggleTodo2.default,
-    filterTodos: _filterTodos2.default
+    filterTodos: _filterTodos2.default,
+    inputChange: _inputChange2.default
 });
 
 exports.default = AppReducers;
 
-},{"./addTodo":191,"./filterTodos":192,"./toggleTodo":194,"redux":186}],194:[function(require,module,exports){
+},{"./addTodo":196,"./filterTodos":197,"./inputChange":199,"./todos":200,"./toggleTodo":201,"redux":186}],199:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function inputChange() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+    var action = arguments[1];
+
+
+    switch (action.type) {
+        case 'INPUT_CHANGE':
+            state = action.name;
+            break;
+    }
+
+    return state;
+}
+
+exports.default = inputChange;
+
+},{}],200:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-function toggleTodo() {
+function todos() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
     var action = arguments[1];
-
 
     return state;
 }
 
+exports.default = todos;
+
+},{}],201:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function toggleTodo() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+    var action = arguments[1];
+
+    switch (action) {
+        case 'TOGGLE_TODO':
+            console.log(action, state);
+            break;
+
+        default:
+            return state;
+    }
+}
+
 exports.default = toggleTodo;
 
-},{}],195:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21269,10 +21470,6 @@ var TodoAdd = function (_React$Component) {
         _this.props = props;
         _this.onChange = _this.onTextChange.bind(_this);
         _this.onClick = _this.onButtonClick.bind(_this);
-        _this.state = {
-            name: '',
-            enabled: false
-        };
         return _this;
     }
 
@@ -21280,7 +21477,8 @@ var TodoAdd = function (_React$Component) {
         key: 'isEnabledCss',
         value: function isEnabledCss() {
             var enabledCss = 'disabled';
-            if (this.state.enabled) {
+            console.log('isEnabledCss', this.props.inputChange);
+            if (!this.isTextBlank(this.props.inputChange)) {
                 enabledCss = '';
             }
             return enabledCss;
@@ -21311,22 +21509,23 @@ var TodoAdd = function (_React$Component) {
         key: 'disableButton',
         value: function disableButton() {
             var retorno = '';
-            if (this.state.enabled === false) {
-                retorno = 'disabled';
-            }
+            // if(this.state.enabled===false) {
+            //     retorno='disabled';
+            // }
 
             return retorno;
         }
     }, {
         key: 'onTextChange',
         value: function onTextChange(evt) {
-            this.setState({ name: evt.currentTarget.value, enabled: this.enableButton(evt.currentTarget.value) });
+            this.props.inputChangeActions(evt.currentTarget.value);
         }
     }, {
         key: 'onButtonClick',
         value: function onButtonClick() {
-            this.props.onAdd(this.state.name);
-            this.setState({ name: '', enabled: false });
+            //this.props.onAdd(this.state.name);
+            //this.setState({ name: '',enabled: false });
+            //dispatch(addTodo(evt.currentTarget.value,this.enableButton(evt.currentTarget.value)));
         }
     }, {
         key: 'render',
@@ -21334,7 +21533,7 @@ var TodoAdd = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'add-comp' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.onChange, placeholder: 'todo', value: this.state.name }),
+                _react2.default.createElement('input', { type: 'text', onChange: this.onChange, placeholder: 'todo', value: this.props.inputChange }),
                 _react2.default.createElement(
                     'button',
                     { type: 'button', className: this.isEnabledCss(), disabled: this.disableButton(), onClick: this.onClick },
@@ -21348,15 +21547,20 @@ var TodoAdd = function (_React$Component) {
 }(_react2.default.Component);
 
 TodoAdd.propTypes = { onAdd: _react2.default.PropTypes.func };
+TodoAdd.propTypes = { enabled: _react2.default.PropTypes.boolean };
+TodoAdd.propTypes = { inputChangeActions: _react2.default.PropTypes.func };
+TodoAdd.propTypes = { inputChange: _react2.default.PropTypes.string };
 
 exports.default = TodoAdd;
 
-},{"react":180}],196:[function(require,module,exports){
+},{"react":180}],203:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -21392,24 +21596,7 @@ var TodoApp = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TodoApp).call(this, props));
 
-        _this.state = {
-            todos: [{
-                label: 'aaa',
-                completed: false,
-                id: 0
-            }, {
-                label: 'bbb',
-                completed: false,
-                id: 1
-            }, {
-                label: 'ccc',
-                completed: true,
-                id: 2
-            }],
-            filteredCount: 3,
-            filter: 'all'
-        };
-
+        console.log(props);
         _this.onAdd = _this.onAddTodo.bind(_this);
         _this.onFilter = _this.onFilterTodo.bind(_this);
         _this.onClick = _this.onClickItem.bind(_this);
@@ -21420,25 +21607,26 @@ var TodoApp = function (_React$Component) {
     _createClass(TodoApp, [{
         key: 'onAddTodo',
         value: function onAddTodo(text) {
-            this.state.todos.push({ label: text, completed: false, id: this.state.todos.length });
-            this.setState({ todos: this.state.todos });
+            // this.state.todos.push({label:text, completed:false, id:this.state.todos.length});
+            // this.setState({todos:this.state.todos});
         }
     }, {
         key: 'onClickItem',
         value: function onClickItem(todo) {
-            todo.completed = !todo.completed;
-            var selected = this.state.todos.filter(function (item) {
-                return item.id === todo.id;
-            });
+            // todo.completed = !todo.completed;
+            // let selected = this.state.todos.filter(function(item) {
+            //     return item.id === todo.id;
+            // });
 
-            selected.completed = !todo.completed;
+            // selected.completed=!todo.completed;
 
-            var count = this.getCount(this.state.todos);
-            if (count == 0 && this.state.filter === 'completed') {
-                this.setState({ todos: this.state.todos, filter: 'all' });
-            } else {
-                this.setState({ todos: this.state.todos, count: count });
-            }
+            // let count = this.getCount(this.state.todos);
+            // if(count==0 && this.state.filter==='completed') {
+            //     this.setState({todos:this.state.todos, filter:'all'});
+            // }else{
+            //     this.setState({todos:this.state.todos, count:count});
+            // }
+
         }
     }, {
         key: 'getCount',
@@ -21459,7 +21647,7 @@ var TodoApp = function (_React$Component) {
     }, {
         key: 'onFilterTodo',
         value: function onFilterTodo(filter) {
-            this.setState({ filter: filter });
+            // this.setState({filter:filter});
         }
     }, {
         key: 'render',
@@ -21467,9 +21655,7 @@ var TodoApp = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_todoAdd2.default, { onAdd: this.onAdd }),
-                _react2.default.createElement(_todoList2.default, { todos: this.state.todos, filter: this.state.filter, onClick: this.onClick }),
-                _react2.default.createElement(_todoFilter2.default, { onFilter: this.onFilter, filter: this.state.filter })
+                _react2.default.createElement(_todoAdd2.default, _extends({}, this.props, { onAdd: this.onAdd }))
             );
         }
     }]);
@@ -21479,7 +21665,7 @@ var TodoApp = function (_React$Component) {
 
 exports.default = TodoApp;
 
-},{"./todoAdd.jsx":195,"./todoFilter.jsx":197,"./todoList.jsx":199,"react":180}],197:[function(require,module,exports){
+},{"./todoAdd.jsx":202,"./todoFilter.jsx":204,"./todoList.jsx":206,"react":180}],204:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21563,7 +21749,7 @@ TodoFilter.propTypes = { filter: _react2.default.PropTypes.string.isRequired };
 
 exports.default = TodoFilter;
 
-},{"react":180}],198:[function(require,module,exports){
+},{"react":180}],205:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21636,7 +21822,7 @@ TodoItem.propTypes = { todo: _react2.default.PropTypes.object.isRequired };
 
 exports.default = TodoItem;
 
-},{"react":180}],199:[function(require,module,exports){
+},{"react":180}],206:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -21713,4 +21899,4 @@ TodoList.propTypes = { onClick: _react2.default.PropTypes.func.isRequired };
 
 exports.default = TodoList;
 
-},{"./todoItem.jsx":198,"react":180}]},{},[190]);
+},{"./todoItem.jsx":205,"react":180}]},{},[195]);
