@@ -1,8 +1,8 @@
-# React Hello World (WIP)
+# React Redux Hello World (WIP)
 
-Playing around React
+Playing around React Redux
 
-[![Travis build status](https://travis-ci.org/iondrimba/react-hello-world.svg?branch=master)](https://travis-ci.org/iondrimba/react-hello-world)
+[![Travis build status](https://travis-ci.org/iondrimba/react-redux-hello-world.svg?branch=master)](https://travis-ci.org/iondrimba/react-redux-hello-world)
 
 
 #### Requires:
@@ -13,8 +13,8 @@ Playing around React
 ## Installation
 
 ```sh
- git clone https://github.com/iondrimba/react-hello-world.git 
- cd react-hello-world
+ git clone https://github.com/iondrimba/react-redux-hello-world.git 
+ cd react-redux-hello-world
  npm install
  gulp
 ```
@@ -22,7 +22,7 @@ Playing around React
 ### [Live demo]
 
 #### GOAL:
-Fooling around with React.
+Fooling around with React Redux.
 
 
 #### TODO:
@@ -61,4 +61,4 @@ Fooling around with React.
 * gulp optimize (run optimization tasks)
 
 [scss-lint]:<https://github.com/brigade/scss-lint#installation>
-[Live demo]:<http://iondrimba.github.io/react-hello-world/>
+[Live demo]:<http://iondrimba.github.io/react-redux-hello-world/>

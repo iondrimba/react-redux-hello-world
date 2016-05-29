@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoAdd from './todoAdd.jsx';
-import TodoList from './todoList';
-import TodoFilter from './todoFilter';
+import TodoList from './todoList.jsx';
+import TodoFilter from './todoFilter.jsx';
 
 class TodoApp extends React.Component {
     constructor(props) {
