@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addTodoActions: bindActionCreators(addTodo, dispatch),
+    addTodoActions: bindActionCreators(addTodo,dispatch),
     filterTodosActions: bindActionCreators(filterTodos, dispatch),
     inputChangeActions: bindActionCreators(inputChange, dispatch),
     toggleTodoActions: bindActionCreators(toggleTodo, dispatch)

@@ -6,7 +6,7 @@ class TodoList extends React.Component {
         super(props);
         this.props=props;
     }
-    filterIntes() {
+    filterItems() {
         let itens=[];
         if(this.props.filter==='completed') {
             this.props.todos.map(function(todo) {
@@ -19,10 +19,16 @@ class TodoList extends React.Component {
         }
 
         return itens;
+   }
+    shouldComponentUpdate(nextProps) {        
+        let retorno=false;
+        if(nextProps.todos.length!=this.props.todos.length) {
+            retorno=true;
+        }
+        return retorno;
     }
-    render() {
-        let itens = this.filterIntes();
-
+    render() {        
+        let itens = this.filterItems();
         return (
             <div className="todo-list">{
                     itens.map(function(todo) {

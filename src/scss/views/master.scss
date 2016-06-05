@@ -32,7 +32,7 @@ button.active {
 }
 
 a:focus,
-button:focus {
+button:not(.disabled):focus {
     @include button-focus();
 }
 

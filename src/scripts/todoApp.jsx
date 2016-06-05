@@ -52,8 +52,8 @@ class TodoApp extends React.Component {
     render() {
         return (
             <div>
-                <TodoAdd {...this.props} onAdd = {this.onAdd}/>
-                
+                <TodoAdd {...this.props}/>
+                <TodoList {...this.props} onClick = {this.onClick}/>
             </div>
         );
     }

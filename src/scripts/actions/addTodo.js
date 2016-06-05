@@ -1,4 +1,4 @@
-const addTodo = (todo) => {
+const addTodo=(todo) => {
   return {
     type: 'ADD_TODO',
     todo

@@ -21300,16 +21300,19 @@ console.log(store.getState());
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-function addTodo(state, action) {
-    var defaultTodo = { name: '', enabled: false };
+function addTodo() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? { name: '', enabled: false } : arguments[0];
+    var action = arguments[1];
 
-    switch (action) {
+
+    switch (action.type) {
         case 'ADD_TODO':
-            console.log(action, state);
-            break;
+            return {
+                name: action.todo.name,
+                enabled: action.todo.enabled
+            };
     }
-
-    return Object.assign({}, state, defaultTodo);
+    return state;
 }
 
 exports.default = addTodo;
@@ -21392,8 +21395,7 @@ function inputChange() {
 
     switch (action.type) {
         case 'INPUT_CHANGE':
-            state = action.name;
-            break;
+            return action.name;
     }
 
     return state;
@@ -21402,15 +21404,29 @@ function inputChange() {
 exports.default = inputChange;
 
 },{}],200:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function todos() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
     var action = arguments[1];
 
+    switch (action.type) {
+        case 'ADD_TODO':
+            if (action.todo.name.length == 0) {
+                return state;
+            }
+            return [].concat(_toConsumableArray(state), [{
+                label: action.todo.name,
+                completed: action.todo.enabled,
+                id: state.length
+            }]);
+    }
     return state;
 }
 
@@ -21477,7 +21493,6 @@ var TodoAdd = function (_React$Component) {
         key: 'isEnabledCss',
         value: function isEnabledCss() {
             var enabledCss = 'disabled';
-            console.log('isEnabledCss', this.props.inputChange);
             if (!this.isTextBlank(this.props.inputChange)) {
                 enabledCss = '';
             }
@@ -21500,20 +21515,14 @@ var TodoAdd = function (_React$Component) {
             return isblank;
         }
     }, {
-        key: 'enableButton',
-        value: function enableButton(text) {
+        key: 'isBtnEnabled',
+        value: function isBtnEnabled(text) {
             var retorno = !this.isTextBlank(text);
-            return retorno;
-        }
-    }, {
-        key: 'disableButton',
-        value: function disableButton() {
-            var retorno = '';
-            // if(this.state.enabled===false) {
-            //     retorno='disabled';
-            // }
-
-            return retorno;
+            if (retorno) {
+                return '';
+            } else {
+                return 'disabled';
+            }
         }
     }, {
         key: 'onTextChange',
@@ -21522,10 +21531,11 @@ var TodoAdd = function (_React$Component) {
         }
     }, {
         key: 'onButtonClick',
-        value: function onButtonClick() {
-            //this.props.onAdd(this.state.name);
-            //this.setState({ name: '',enabled: false });
-            //dispatch(addTodo(evt.currentTarget.value,this.enableButton(evt.currentTarget.value)));
+        value: function onButtonClick(evt) {
+            evt.preventDefault();
+            this.props.addTodoActions({ name: this.props.inputChange, enabled: false });
+            this.props.inputChangeActions('');
+            this.refs.txt.focus();
         }
     }, {
         key: 'render',
@@ -21533,11 +21543,15 @@ var TodoAdd = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'add-comp' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.onChange, placeholder: 'todo', value: this.props.inputChange }),
                 _react2.default.createElement(
-                    'button',
-                    { type: 'button', className: this.isEnabledCss(), disabled: this.disableButton(), onClick: this.onClick },
-                    'Add'
+                    'form',
+                    { action: '/' },
+                    _react2.default.createElement('input', { type: 'text', ref: 'txt', onChange: this.onChange, placeholder: 'todo', value: this.props.inputChange }),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'submit', ref: 'btn', disabled: this.isBtnEnabled(this.props.inputChange), className: this.isEnabledCss(), onClick: this.onClick },
+                        'Add'
+                    )
                 )
             );
         }
@@ -21546,9 +21560,9 @@ var TodoAdd = function (_React$Component) {
     return TodoAdd;
 }(_react2.default.Component);
 
-TodoAdd.propTypes = { onAdd: _react2.default.PropTypes.func };
 TodoAdd.propTypes = { enabled: _react2.default.PropTypes.boolean };
 TodoAdd.propTypes = { inputChangeActions: _react2.default.PropTypes.func };
+TodoAdd.propTypes = { addTodoActions: _react2.default.PropTypes.func };
 TodoAdd.propTypes = { inputChange: _react2.default.PropTypes.string };
 
 exports.default = TodoAdd;
@@ -21655,7 +21669,8 @@ var TodoApp = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_todoAdd2.default, _extends({}, this.props, { onAdd: this.onAdd }))
+                _react2.default.createElement(_todoAdd2.default, this.props),
+                _react2.default.createElement(_todoList2.default, _extends({}, this.props, { onClick: this.onClick }))
             );
         }
     }]);
@@ -21860,8 +21875,8 @@ var TodoList = function (_React$Component) {
     }
 
     _createClass(TodoList, [{
-        key: 'filterIntes',
-        value: function filterIntes() {
+        key: 'filterItems',
+        value: function filterItems() {
             var itens = [];
             if (this.props.filter === 'completed') {
                 this.props.todos.map(function (todo) {
@@ -21876,10 +21891,18 @@ var TodoList = function (_React$Component) {
             return itens;
         }
     }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps) {
+            var retorno = false;
+            if (nextProps.todos.length != this.props.todos.length) {
+                retorno = true;
+            }
+            return retorno;
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var itens = this.filterIntes();
-
+            var itens = this.filterItems();
             return _react2.default.createElement(
                 'div',
                 { className: 'todo-list' },

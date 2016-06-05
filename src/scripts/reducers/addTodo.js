@@ -1,14 +1,13 @@
-function addTodo(state,action) {
-    let defaultTodo={ name: '',enabled: false };
-    
-    switch (action) {
+function addTodo(state={name:'', enabled:false},action) {
+     
+    switch (action.type) {
         case 'ADD_TODO':
-            console.log(action, state);  
-            break;
+            return {
+                name:action.todo.name,
+                enabled:action.todo.enabled
+            };
     }
-
-    return Object.assign({}, state, defaultTodo);
-    
+    return state;    
 }
 
 export default addTodo;

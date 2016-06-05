@@ -420,7 +420,7 @@ button.active {
   color: #072F14; }
 
 a:focus,
-button:focus {
+button:not(.disabled):focus {
   outline: none;
   background-color: #35FD58;
   color: #072F14; }

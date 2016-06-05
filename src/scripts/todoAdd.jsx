@@ -9,7 +9,6 @@ class TodoAdd extends React.Component {
     }
     isEnabledCss() {
         let enabledCss='disabled';
-        console.log('isEnabledCss',this.props.inputChange);
         if(!this.isTextBlank(this.props.inputChange)) {
             enabledCss='';
         }
@@ -29,39 +28,38 @@ class TodoAdd extends React.Component {
 
         return isblank;
     }
-    enableButton(text) {
+    isBtnEnabled(text) {
         let retorno=!this.isTextBlank(text);
-        return retorno;
-    }
-    disableButton() {
-        let retorno='';
-        // if(this.state.enabled===false) {
-        //     retorno='disabled';
-        // }
-
-        return retorno;
+        if(retorno) {
+            return '';
+        } else{
+            return 'disabled';
+        }
     }
     onTextChange(evt) {        
-        this.props.inputChangeActions(evt.currentTarget.value);
+        this.props.inputChangeActions(evt.currentTarget.value);        
     }
-    onButtonClick() {
-        //this.props.onAdd(this.state.name);
-        //this.setState({ name: '',enabled: false });
-        //dispatch(addTodo(evt.currentTarget.value,this.enableButton(evt.currentTarget.value)));
+    onButtonClick(evt) {
+        evt.preventDefault();
+        this.props.addTodoActions({ name: this.props.inputChange,enabled: false });
+        this.props.inputChangeActions('');
+        this.refs.txt.focus();
     }
     render() {
         return (
             <div className="add-comp">
-                <input type="text" onChange={this.onChange}  placeholder="todo" value={this.props.inputChange}/>
-                <button type="button" className={this.isEnabledCss()} disabled={this.disableButton()} onClick={this.onClick}>Add</button>
+                <form action="/">
+                    <input type="text" ref="txt" onChange={this.onChange}  placeholder="todo" value={this.props.inputChange}/>
+                    <button type="submit" ref="btn" disabled={this.isBtnEnabled(this.props.inputChange)} className={this.isEnabledCss()} onClick={this.onClick}>Add</button>
+                </form>
             </div >
         );
     }
 }
 
-TodoAdd.propTypes={ onAdd: React.PropTypes.func };
 TodoAdd.propTypes={ enabled: React.PropTypes.boolean };
 TodoAdd.propTypes={ inputChangeActions: React.PropTypes.func };
+TodoAdd.propTypes={ addTodoActions: React.PropTypes.func };
 TodoAdd.propTypes={ inputChange: React.PropTypes.string };
 
 export default TodoAdd;
