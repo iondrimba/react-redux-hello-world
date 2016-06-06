@@ -10,8 +10,7 @@ function mapStateToProps(state) {
   return {
     todos:state.todos,
     addTodo:state.addTodo,
-    inputChange:state.inputChange,
-    toggleTodo:state.toggleTodo,    
+    inputChange:state.inputChange, 
     filterTodos: state.filterTodos
   };
 }

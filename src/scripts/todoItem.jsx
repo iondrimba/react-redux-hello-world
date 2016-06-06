@@ -6,12 +6,9 @@ class TodoItem extends React.Component {
         this.props=props;
         this.todo = this.props.todo;
         this.onClick = this.onClickItem.bind(this);
-        this.state={
-            completed: this.todo.completed
-        };
     }
-    onClickItem() {
-        this.props.onClick(this.todo);
+    onClickItem() {        
+        this.props.toggleTodoActions(this.todo);        
     }
     isCompletedCSS() {
         let className='todoItem';
@@ -29,7 +26,9 @@ class TodoItem extends React.Component {
     }
 }
 
-TodoItem.propTypes = { onClick: React.PropTypes.func };
+TodoItem.propTypes={ toggleTodoActions: React.PropTypes.func };
+TodoItem.propTypes={ todos: React.PropTypes.array };
+TodoItem.propTypes={ onClick: React.PropTypes.func };
 TodoItem.propTypes = { todo: React.PropTypes.object.isRequired };
 
 export default TodoItem;

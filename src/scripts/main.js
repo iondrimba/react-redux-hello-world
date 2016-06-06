@@ -23,9 +23,7 @@ const defaultStore = {
             id: 2
         }
     ],
-    addTodo:{},
-    inputChange:'',
-    toggleTodo:false,    
+    inputChange:'', 
     filterTodos: 'all'
 };
 

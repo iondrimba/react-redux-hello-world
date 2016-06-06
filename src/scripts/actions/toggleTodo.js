@@ -1,4 +1,4 @@
-const toggleTodo = (todo) => {
+const toggleTodo=(todo) => {
   return {
     type: 'TOGGLE_TODO',
     todo

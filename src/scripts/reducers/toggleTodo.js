@@ -1,8 +1,13 @@
-function toggleTodo(state=false, action) {
-    switch (action) {
-        case 'TOGGLE_TODO':
-            console.log(action, state);  
-            break;
+function toggleTodo(state=[],action) {
+    
+    switch (action.type) {
+        case 'TOGGLE_TODO': {
+            let a=state.find(x => x.id==action.todo.id);
+            a.completed=!a.completed;
+            return [
+                ...state
+            ];   
+        }           
     
         default:
            return state;

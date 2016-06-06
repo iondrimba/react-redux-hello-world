@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoItem from './todoItem.jsx';
+import _ from 'lodash';
 
 class TodoList extends React.Component {
    constructor(props) {
@@ -20,10 +21,11 @@ class TodoList extends React.Component {
 
         return itens;
    }
-    shouldComponentUpdate(nextProps) {        
-        let retorno=false;
-        if(nextProps.todos.length!=this.props.todos.length) {
-            retorno=true;
+   shouldComponentUpdate(nextProps) {        
+        let retorno=true;        
+        if(!_.isEqual(nextProps.todos, this.props.todos)) {
+            retorno = true;
+            console.log('update list');
         }
         return retorno;
     }
@@ -33,7 +35,7 @@ class TodoList extends React.Component {
             <div className="todo-list">{
                     itens.map(function(todo) {
                         return (
-                            <TodoItem key={todo.id} todo={todo} onClick={this.props.onClick}/>
+                            <TodoItem {...this.props} key={todo.id} todo={todo} onClick={this.props.onClick}/>
                         );
                     }.bind(this))
                  }
