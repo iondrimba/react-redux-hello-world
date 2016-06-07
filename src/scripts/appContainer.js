@@ -6,9 +6,18 @@ import inputChange from './actions/inputChange';
 import toggleTodo from './actions/toggleTodo';
 import TodoApp from './todoApp.jsx';
 
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'all':
+      return todos;
+    case 'completed':
+      return todos.filter(t => t.completed);
+  }
+};
+
 function mapStateToProps(state) {
   return {
-    todos:state.todos,
+    todos:getVisibleTodos(state.todos, state.filterTodos),
     addTodo:state.addTodo,
     inputChange:state.inputChange, 
     filterTodos: state.filterTodos

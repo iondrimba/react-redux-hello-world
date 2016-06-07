@@ -27,7 +27,7 @@ const defaultStore = {
     filterTodos: 'all'
 };
 
-let store=createStore(AppReducers, defaultStore);
+let store=createStore(AppReducers, defaultStore,window.devToolsExtension && window.devToolsExtension());
 console.log(store.getState());
 render(
     <Provider store={store}>

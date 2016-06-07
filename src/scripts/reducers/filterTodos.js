@@ -1,11 +1,7 @@
 function filterTodos(state='all', action) {
-    switch (action) {
+    switch (action.type) {
         case 'FILTER_TODOS':
-            console.log(action, state);  
-            break;
-        case '1FILTER_TODOS':
-            console.log(action, state);  
-            break;
+            return action.filter;
         default:
            return state;
     }

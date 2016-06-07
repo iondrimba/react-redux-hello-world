@@ -1,6 +1,6 @@
 import toggleTodo from './toggleTodo.js';
 
-function todos(state = [], action) {
+function todos(state=[],action) {
     switch(action.type) {
         case 'ADD_TODO': {
             if(action.todo.name.length>0) {
@@ -14,7 +14,7 @@ function todos(state = [], action) {
                 ];
             }
             return state;
-        }
+        }          
         case 'TOGGLE_TODO': {
             return toggleTodo(state, action);
         }
