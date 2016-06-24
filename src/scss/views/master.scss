@@ -28,7 +28,7 @@ button:active {
 }
 
 button.active {
-    @include button-focus();
+    @include button-active();
 }
 
 a:focus,
@@ -71,6 +71,9 @@ hr {
 }
 .todo-list {
     margin-bottom:20px;
+}
+.todo-menu {
+    margin-bottom: 40px;
 }
 .todo-filter {
     button:first-child {

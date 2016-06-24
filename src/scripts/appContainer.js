@@ -15,12 +15,14 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
-function mapStateToProps(state) {
+
+
+function mapStateToProps(store) {
   return {
-    todos:getVisibleTodos(state.todos, state.filterTodos),
-    addTodo:state.addTodo,
-    inputChange:state.inputChange, 
-    filterTodos: state.filterTodos
+    todos:getVisibleTodos(store.todos, store.filterTodos),
+    addTodo:store.addTodo,
+    inputChange:store.inputChange,
+    filterTodos: store.filterTodos
   };
 }
 

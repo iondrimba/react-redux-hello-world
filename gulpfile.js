@@ -1,10 +1,10 @@
 'use strict';
 require('es6-promise').Promise;
 let gulp = require('gulp');
-let gulpsync=require('gulp-sync')(gulp);
+let gulpsync = require('gulp-sync')(gulp);
 let react = require('gulp-react');
 
-// using vinyl-source-stream: 
+// using vinyl-source-stream:
 gulp.task('browserify', require('./tasks/browserify.js'));
 
 //eslint task
@@ -25,10 +25,10 @@ gulp.task('sass', require('./tasks/sass.js'));
 //watch js/scss/teplate files
 gulp.task('watch', require('./tasks/watch.js'));
 
-//html min 
+//html min
 gulp.task('html-min', require('./tasks/html-min.js'));
 
-//css min 
+//css min
 gulp.task('minify-css', require('./tasks/minify-css.js'));
 
 //post css
@@ -40,18 +40,11 @@ gulp.task('coveralls', require('./tasks/coveralls.js'));
 //local server
 gulp.task('browser-sync', require('./tasks/browser-sync.js'));
 
-gulp.task('react', function () {
+gulp.task('react', function() {
 	return gulp.src('./src/scripts/*.jsx')
 		.pipe(react())
 		.pipe(gulp.dest('./src/scripts/'));
 });
 
 // Default Task
-gulp.task('default', gulpsync.sync(['scsslint', 'sass',  'browserify', 'watch', 'browser-sync']));
-
-//optimization task isolated because of the asynchronous problems gulp has
-gulp.task('optimize', gulpsync.sync(['minify-css', 'html-min', 'uglify', 'imagemin']));
-
-//publish Task
-gulp.task('deploy', gulpsync.sync(['scsslint', 'sass', 'imagemin', 'browserify']));
-
+gulp.task('default', gulpsync.sync(['sass', 'browserify', 'watch', 'browser-sync']));

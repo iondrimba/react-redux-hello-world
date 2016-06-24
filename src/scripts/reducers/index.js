@@ -1,3 +1,4 @@
+import { routerReducer} from 'react-router-redux';
 import { combineReducers } from 'redux';
 import todos from './todos';
 import addTodo from './addTodo';
@@ -8,7 +9,8 @@ const AppReducers=combineReducers({
     todos,
     addTodo,
     filterTodos,
-    inputChange
+    inputChange,
+    routing:routerReducer
 });
 
 export default AppReducers;

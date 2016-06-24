@@ -5,20 +5,12 @@ var stringify = require('stringify');
 var browserify = require('browserify');
 var babelify = require("babelify");
 
-module.exports = function() {
-    stringify.registerWithRequire({
-        extensions: ['.txt', '.html'],
-        minify: true,
-        minifier: {
-            extensions: ['.html']
-        }
-    });
+module.exports = function () {
 
     var bundleStream = browserify('./src/scripts/main.js')
         .transform(babelify, {
             'presets': ['es2015', 'react']
         })
-        .transform(stringify(['.html']))
         .bundle();
 
     bundleStream
