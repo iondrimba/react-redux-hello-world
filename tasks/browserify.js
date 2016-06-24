@@ -1,19 +1,17 @@
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
-var streamify = require('gulp-streamify');
-var stringify = require('stringify');
 var browserify = require('browserify');
 var babelify = require("babelify");
 
-module.exports = function () {
+module.exports = function() {
 
-    var bundleStream = browserify('./src/scripts/main.js')
-        .transform(babelify, {
-            'presets': ['es2015', 'react']
-        })
-        .bundle();
+	var bundleStream = browserify('./src/scripts/main.js')
+		.transform(babelify, {
+			'presets': ['es2015', 'react']
+		})
+		.bundle();
 
-    bundleStream
-        .pipe(source('app.js'))
-        .pipe(gulp.dest('./public/js'))
+	bundleStream
+		.pipe(source('app.js'))
+		.pipe(gulp.dest('./public/js'))
 };
