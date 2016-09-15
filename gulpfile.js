@@ -19,13 +19,7 @@ gulp.task('watch', require('./tasks/watch.js'));
 //local server
 gulp.task('browser-sync', require('./tasks/browser-sync.js'));
 
-gulp.task('react', function() {
-	return gulp.src('./src/scripts/*.jsx')
-		.pipe(react())
-		.pipe(gulp.dest('./src/scripts/'));
-});
-
 // Default Task
-gulp.task('default', gulpsync.sync(['sass', 'browserify', 'watch', 'browser-sync']));
+gulp.task('default', gulpsync.sync(['sass', 'eslint', 'browserify', 'browser-sync', 'watch']));
 
 gulp.task('deploy', gulpsync.sync(['sass', 'browserify']));

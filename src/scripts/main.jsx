@@ -13,11 +13,11 @@ import {
 from 'redux';
 
 import AppReducers from './reducers/index';
-import AppContainer from './appContainer';
+import AppContainer from './appContainer.jsx';
 
 const defaultStore = {
   todos: [{
-    label: 'aaa',
+    label: 'aaa213213',
     completed: false,
     id: 0
   }, {

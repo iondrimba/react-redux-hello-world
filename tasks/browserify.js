@@ -5,7 +5,7 @@ var babelify = require("babelify");
 
 module.exports = function() {
 
-	var bundleStream = browserify('./src/scripts/main.js')
+	var bundleStream = browserify('./src/scripts/main.jsx')
 		.transform(babelify, {
 			'presets': ['es2015', 'react']
 		})

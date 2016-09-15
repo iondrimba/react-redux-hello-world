@@ -1,6 +1,5 @@
 import React from 'react';
 import TodoItem from './todoItem.jsx';
-import _ from 'lodash';
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -37,6 +36,7 @@ class TodoList extends React.Component {
 }
 
 TodoList.propTypes={ todos: React.PropTypes.array.isRequired };
+TodoList.propTypes={ onClick: React.PropTypes.func.isRequired };
 TodoList.propTypes={ filterTodos: React.PropTypes.string.isRequired };
 
 
