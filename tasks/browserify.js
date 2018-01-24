@@ -7,7 +7,7 @@ module.exports = function() {
 
 	var bundleStream = browserify('./src/scripts/main.jsx')
 		.transform(babelify, {
-			'presets': ['es2015', 'react']
+			'presets': ['env', 'react']
 		})
 		.bundle();
 
