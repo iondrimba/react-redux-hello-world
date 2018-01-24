@@ -1,4 +1,4 @@
-# React Redux Hello World (WIP)
+# React Redux Hello World
 
 Playing around React Redux
 
